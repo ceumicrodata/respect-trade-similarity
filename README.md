@@ -17,3 +17,11 @@ For each country pair (say, Hungary-Russia) in each year will construct indexes 
 TCI(i,j,t) = sum_{product p} product_share(i,j,t) * log[product_share(i,j,t) / product_share(baseline,j,t)]	
 ```
 This is the [Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)between the product shares (i,j) and the product shares (baseline,j). The use of KLD can (hopefully) also be motivated by economic theory. The baseline can be EU average of country-i trade shares before accession.
+
+
+
+
+----------------------------------------------
+Requirements:
+Ubuntu:
+p7zip-full
