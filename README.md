@@ -19,7 +19,12 @@ TCI(i,j,t) = sum_{product p} product_share(i,j,t) * log[product_share(i,j,t) / p
 This is the [Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)between the product shares (i,j) and the product shares (baseline,j). The use of KLD can (hopefully) also be motivated by economic theory. The baseline can be EU average of country-i trade shares before accession.
 
 
-
+## Details on computation
+- Always use one side of transaction only. Exports or imports. Create index for both.
+- For comparability, aggregate up all values to 6-digit Harmonized System.
+- Shares are based on value. Value of HS6 product exports between i and j in year t, divided by total value of exports between i and j.
+- First baseline is EU total. Create the same shares with i = EU rather than an individual country. Drop all products that are zero in total EU trade, they will also be zero in individual countries.
+- When calculating formula, treat `0 log(0) = 0` (L'Hopital's rule).
 
 ----------------------------------------------
 Requirements:
