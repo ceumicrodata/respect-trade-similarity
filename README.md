@@ -26,7 +26,14 @@ This is the [Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback
 - First baseline is EU total. Create the same shares with i = EU rather than an individual country. Drop all products that are zero in total EU trade, they will also be zero in individual countries.
 - When calculating formula, treat `0 log(0) = 0` (L'Hopital's rule).
 
-----------------------------------------------
-Requirements:
-Ubuntu:
-p7zip-full
+## Computation in pesudocode
+```
+export_ijct = zeros(N_reporter, N_partner, N_cn8, T)
+export_ijpt = sum(export_ijct) by(ijt, HS6)
+# include all zeros
+country_share_ijpt = export_ijpt ./ sum(export_ijpt, p)
+eu_share = sum(export_ijpt, i) ./ sum(export_ijpt, ip)
+function KLD(x, y)
+  return sum(x .* log.(x ./ y), p)
+end
+```
