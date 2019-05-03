@@ -1,5 +1,5 @@
 import pandas as pd
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool
 
 from os import listdir
 from os.path import isfile, join
