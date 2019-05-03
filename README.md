@@ -37,3 +37,36 @@ function KLD(x, y)
   return sum(x .* log.(x ./ y), p)
 end
 ```
+
+# Countries of focus
+## New Member States
+- Czech Republic
+- Hungary
+- Poland
+- Slovenia
+- Slovakia
+- Latvia
+- Lithuania
+- Croatia
+- Bulgaria
+- Romania
+
+## Candidate Countries
+- Albania
+- Bosnia
+- Turkey
+- Macedonia
+- Montenegro
+- Serbia
+
+## Southern Neighbourhood Countries
+- Algeria
+- Morocco
+- Tunisia
+
+## Eastern Neighbourhood Countries
+- Armenia
+- Azerbaijan
+- Georgia
+- Moldova
+- Ukraine
