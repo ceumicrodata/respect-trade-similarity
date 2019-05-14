@@ -14,7 +14,7 @@ def exp_imp(data_name):
 
     ########################################################
     data = pd.read_csv(source_in+data_name)
-
+    data = data[data.PRODUCT_NC!="TOTAL"]
     data["PRODUCT_NC"] = data["PRODUCT_NC"].apply(lambda x: str(x[:6]))
     sixdigit_product_trade = pd.DataFrame(data.groupby(["TRADE_TYPE",'DECLARANT_ISO','PARTNER_ISO',"PRODUCT_NC"])['VALUE_IN_EUROS'].sum().reset_index())
     ########################################################
