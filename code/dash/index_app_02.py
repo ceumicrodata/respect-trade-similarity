@@ -16,6 +16,25 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 df = pd.read_csv('../../output/TC_INDEX_EXP_.csv',index_col=0)
 
+cc = pd.read_csv("../../output/CC_detail.csv").set_index("ISO_code")
+
+gdp = pd.read_csv("../../output/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_10576699.csv").rename(columns = {"Country Name":"Country_Name"})
+
+
+def names(x):
+
+    try: 
+        return cc.loc[x]["c_name"]
+    except: 
+        return x
+
+cc.GDP_by_capita = cc.GDP_B_USD/cc.pop
+
+
+df.DECLARANT = df.DECLARANT.apply(names)
+df.PARTNER = df.PARTNER.apply(names)
+
+
 DECLARANTS = df["DECLARANT"].unique()
 PARTNERS = df["PARTNER"].unique()
 
@@ -72,12 +91,12 @@ def update_graph(Declarant, Partners):
 
     return {
 
-        'data': [
+        'data': [[
 
 
         go.Scatter(
             x=[x for x in range(2001,2018)],
-            y=df.loc[df.DECLARANT==d].loc[df.PARTNER==Partners, :].drop(columns=["DECLARANT","PARTNER"]).reset_index(drop=True).iloc[0,:].values,
+            y=df.loc[df.==d].loc[df.PARTNER==Partners, :].drop(columns=["DECLARANT","PARTNER"]).reset_index(drop=True).iloc[0,:].values,
             text= "Trade between",
             mode='lines',
             marker={
@@ -90,11 +109,30 @@ def update_graph(Declarant, Partners):
 
        for d in Declarant],
 
+        [go.Scatter(
+            x=[x for x in range(2001,2017)],
+            y=gdp.loc[gdp.Country_Name==d].drop(columns=["Country_Name"]).reset_index(drop=True).iloc[0,:].values,
+            text= "Trade between",
+            mode='lines',
+            marker={
+                'size': 15,
+                'opacity': 0.5,
+                'line': {'width': 0.5, 'color': 'white'}
+            },
+            name = d
+        )
+
+       for d in Declarant]],
+
 
         'layout': go.Layout(
             xaxis={
                 'title': "Year",
-            },
+            },go.Bar(
+    x=['giraffes', 'orangutans', 'monkeys'],
+    y=[20, 14, 23],
+    name='SF Zoo'
+)
             yaxis={
                 'title': "Country",
             },
