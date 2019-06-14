@@ -4,7 +4,7 @@ from multiprocessing import Pool
 
 file_list = glob.glob('../temp/index/data/*')
 
-print(len(file_list))
+#print(len(file_list))
 def colnames(df):
 	try:
 		cols = ["DECLARANT_ISO","PARTNER_ISO","TCI"]
@@ -25,10 +25,10 @@ file_list_EXP = [db for db in file_list if "EXP" in db]
 
 file_list_IMP = [db for db in file_list if "IMP" in db]
 
-print(file_list_IMP,file_list_EXP)
+#print(file_list_IMP,file_list_EXP)
 
-print("IMP", len(file_list_IMP))
-print("EXP", len(file_list_EXP))
+#print("IMP", len(file_list_IMP))
+#print("EXP", len(file_list_EXP))
 
 lista = [file_list_EXP,file_list_IMP]
 
@@ -39,7 +39,7 @@ def make_index(file_list):
 	data = data.pivot_table(index=['DECLARANT','PARTNER'],columns='FILE')
 	data.to_csv('../temp/index/dirty/INDEX_'+file_list[0][-14:-10]+'.csv')
 	# new content
-	print("new content")
+	#print("new content")
 	"""
 	data = data.iloc[:,:19].drop(index=[0,1]).reset_index(drop=True).T.reset_index(drop=True).T
 	cols = ["DECLARANT","PARTNER"] + [ "TCI_"+str(x) for x in range(2001,2018)]

@@ -4,8 +4,8 @@ import glob
 
 data_list = glob.glob('../temp/exp_imp/*')
 
-print(data_list)
-print(data_list[0][-14:])
+# print(data_list)
+# print(data_list[0][-14:])
 def almost_index(filename):
 	data = pd.read_csv(filename).drop(columns="Unnamed: 0")
 	EU_shares = pd.DataFrame(data.groupby(["PARTNER_ISO","PRODUCT_NC"])["VALUE_IN_EUROS"].sum()).reset_index()
