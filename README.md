@@ -70,3 +70,9 @@ end
 - Georgia
 - Moldova
 - Ukraine
+
+# Data cleaning steps
+1. Data is downloaded from Eurostat Comext at [URL]
+2. We only keep trade flows in normal statistical regime (excluding, for example, processing trade)
+3. We aggregate all trade flows up to 6-digit Harmonized System products.
+4. There are cases when product codes are masked to protect confidentiality of individual sellers, affecting about 2--3 percent of trade value. Because these product codes are available at the Chapter (2-digit) level, we redistribute the total value of confidential trade across the reported, non-confidential product codes of the same Chapter.
