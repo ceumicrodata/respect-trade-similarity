@@ -24,7 +24,7 @@ def exp_imp(data_name):
     #drop rows where "TOTAL" occures, filter to rows where stat_regime == 1
     data = data[data.PRODUCT_NC!="TOTAL"][data.STAT_REGIME == 1]
     #filter on product code
-    #data["PRODUCT_NC"] = data["PRODUCT_NC"].apply(lambda x: int(x / 10**(6-digit_code)))
+    data["PRODUCT_NC"] = data["PRODUCT_NC"].apply(lambda x: int(x / 10**(8 - digit_code)))
     # select data
     sixdigit_product_trade = pd.DataFrame(data.groupby(["FLOW",'DECLARANT_ISO','PARTNER_ISO',"PRODUCT_NC"])['VALUE_IN_EUROS'].sum().reset_index())
     ########################################################
