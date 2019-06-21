@@ -76,3 +76,30 @@ end
 2. We only keep trade flows in normal statistical regime (excluding, for example, processing trade)
 3. We aggregate all trade flows up to 6-digit Harmonized System products.
 4. There are cases when product codes are masked to protect confidentiality of individual sellers, affecting about 2--3 percent of trade value. Because these product codes are available at the Chapter (2-digit) level, we redistribute the total value of confidential trade across the reported, non-confidential product codes of the same Chapter.
+
+# State of the art
+
+All indexes of similarity start with a vector of trade shares si and sj and compute
+```
+sum_p f(s_{ip}, s_{jp}),
+```
+for various functions $f$.
+
+The Krugman Specialization Index (Krugman, 1991) uses $f(x, y) = |x - y|$. This index captures the absolute percentage deviation between trade shares.
+
+An alternative measure is the Finger-Kreining index (Finger and Kreinin, 1979), with $f(x) = min(x, y)$, capturing the least amount of overlap between the two trade shares.
+
+Fontagné et al (2018) use dissimularity measures for binary vectors, with $s_{ip}\in \{0,1\}$, such as the Levenshtein distance and the Bray-Curtis measure.
+
+None of these indexes are based on economic theory. By contract assume that consumers have CES preferences over the individual products, with elasticity of substitution sigma. 
+```
+f(x, y) = x^{1/\sigma} y^{1-1/\sigma}
+```
+In the limite, when $\sigma\to 1$, this index converges to the Kullback-Leibler divergence.
+
+Krugman, Paul. 1991. Geography and Trade. Cambridge: MIT Press.
+
+Finger, J. M., and M. E. Kreinin. 1979. “A Measure of 'Export Similarity' and Its Possible Uses.” The Economic Journal 89 (356): 905–12.
+
+Fontagné, Lionel, Angelo Secchi, and Chiara Tomasi. 2018. “Exporters’ Product Vectors across Markets.” European Economic Review 110 (November): 150–80.
+
