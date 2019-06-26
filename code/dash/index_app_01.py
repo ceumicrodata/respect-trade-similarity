@@ -13,16 +13,13 @@ import plotly.graph_objs as go
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
 df = pd.read_csv('../../output/TC_INDEX_EXP_.csv',index_col=0)
-
-cc = pd.read_csv("../../output/CC_detail.csv").set_index("ISO_code")
+cc = pd.read_csv("../../input/iso-3166/countries.csv").set_index("iso3166_2")
 
 
 def names(x):
-
     try: 
-        return cc.loc[x]["c_name"]
+        return cc.loc[x]["country_name"]
     except: 
         return x
 
@@ -37,7 +34,6 @@ PARTNERS = df["PARTNER"].unique()
 
 
 def part_num(x):
-
     if len(x)==1:
         return x
     elif len(x)>1:
@@ -46,76 +42,60 @@ def part_num(x):
 
 app.layout = html.Div(children=[
     html.H1(children='Probe 01'),
-
     html.Div(children='''
         ceu microdata.
     '''),
-
     html.Div([
-
         html.Div([
             dcc.Dropdown(
-                id='Declarant',
+                id='Declarants',
                 options=[{'label': i, 'value': i} for i in DECLARANTS],
                 value='HU',
                 multi=True
             ),
             dcc.Dropdown(
-                id='Parners',
+                id='Partner',
                 options=[{'label': i, 'value': i} for i in PARTNERS],
-                value='RU',
-               
+                value='RU',              
             )
-
         ],
         style={'width': '48%', 'display': 'inline-block'}),
-
         dcc.Graph(id='indicator-graphic'),
-
             ])
     ])
 
-
 @app.callback(
     Output('indicator-graphic', 'figure'),
-    [Input('Declarant', 'value'),
-     Input('Parners', 'value'),
+    [Input('Declarants', 'value'),
+     Input('Partner', 'value'),
     ])
 
-def update_graph(Declarant, Partners):
-    #print(df.loc[df.DECLARANT==Declarant].loc[df.PARTNER==Parners[0], :])
-
+def update_graph(Declarants, Partner):
     return {
-
         'data': [
-
-
         go.Scatter(
-            x=[x for x in range(2001,2018)],
-            y=df.loc[df.DECLARANT==d].loc[df.PARTNER==Partners, :].drop(columns=["DECLARANT","PARTNER"]).reset_index(drop=True).iloc[0,:].values,
-            text= "Trade between",
-            mode='lines',
-            marker={
+            x = [x for x in range(2001,2018)],
+            # danger zone: just map columns by their number, not their name
+            y = df.loc[df.DECLARANT==d].loc[df.PARTNER==Partner, :].drop(columns=["DECLARANT","PARTNER"]).reset_index(drop=True).iloc[0,:].values,
+            text = 'Trade between {} and {}'.format(d, Partner),
+            mode = 'lines',
+            marker = {
                 'size': 15,
                 'opacity': 0.5,
                 'line': {'width': 0.5, 'color': 'white'}
             },
             name = d
         )
-
-       for d in Declarant],
-
-
+        for d in Declarants],
         'layout': go.Layout(
             xaxis={
                 'title': "Year",
             },
             yaxis={
-                'title': "Country",
+                'title': "Dissimilarity",
             },
             margin={'l': 40, 'b': 40, 't': 10, 'r': 0},
             hovermode='closest'
-
         )
     }
 

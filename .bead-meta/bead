@@ -1,5 +1,10 @@
 {
     "inputs": {
+        "iso-3166": {
+            "content_id": "6926d77f39c9b292a004b9d3484a15ee2cf81106b48984494f6286013f52ae4a9c111f44c4abeb77c6e626b2ac2a26af04f2032a3acbc46168a5b73eaf9b01fd", 
+            "freeze_time": "20190626T100543421212+0200", 
+            "kind": "ae4e26ef75fbe12024b4e2796ab82a63-bc7f2edf-f416-44f5-99d6-da7f62dd5fd3"
+        }, 
         "trade_data_filtered": {
             "content_id": "e1d0986b4f710972f9798ec0d9f2a1ef20d6347e6d9299de708000e3ae1678132346874e1470b46872b67c9d8c2ab3ebb01b33e859e05f13689919b523a94ed9", 
             "freeze_time": "20190619T175304828170+0200", 
