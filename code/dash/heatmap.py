@@ -6,6 +6,8 @@ import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 from dash import Dash
 
+THETA = 8.0
+
 YEARS = ['{}'.format(y) for y in range(2001, 2018)]
 
 NEW_MEMBER_STATES = 'CZ HU PL SI SK LV LT HR BG RO'.split()
@@ -24,45 +26,117 @@ export_data = export_data[export_data.PARTNER.isin(PARTNERS)]
 def sort_data(Z):
     z = Z.values
     Z['sort'] = z.mean(axis=1)
-    Z = Z.sort_values(by='sort', ascending=False).drop(columns='sort')
+    Z = Z.sort_values(by='sort', ascending=True).drop(columns='sort')
     return Z
 
 def prepare_data(data, year):
-    Z = sort_data(data.pivot(index='DECLARANT', columns='PARTNER', values='TCI_{}'.format(year)))
+    Z = sort_data(pd.np.exp(-1/THETA*data.pivot(index='declarant_name', columns='partner_name', values='TCI_{}'.format(year))))
 
     z = Z.values
     x = Z.columns.values
     y = Z.index.values
     return (x, y, z)
 
+def update_slopechart(Partner):
+    Declarants, Emphasized = NEW_MEMBER_STATES, []
+    data = export_data[export_data.DECLARANT.isin(Declarants)].query('PARTNER=="{}"'.format(Partner))
+    return {
+        'data': [
+        go.Scatter(
+            x = [2001, 2017],
+            y = [data.query('DECLARANT=="{}"'.format(d))['TCI_2001'].values[0], data.query('DECLARANT=="{}"'.format(d))['TCI_2017'].values[0]],
+            text = 'Trade between {} and {}'.format(d, Partner),
+            mode = 'lines',
+            marker = {
+                'size': 15,
+                'opacity': 0.5,
+                'line': {'width': 0.5, 'color': 'lightgrey'}
+            },
+            name = d
+        )
+        for d in Declarants],
+        'layout': go.Layout(
+            xaxis={
+                'title': "Year",
+            },
+            yaxis={
+                'title': "Dissimilarity",
+            },
+            margin={'l': 40, 'b': 40, 't': 10, 'r': 0},
+            hovermode='closest'
+        )
+    }
+
+
 app = Dash('')
 
-layout = html.Div(
-    [html.Div([html.H1("Trade Dissimilarity Index")], className="row", style={'textAlign': "center"}),
-     html.Div(
-         [dcc.Dropdown(id="selected-type", options=[{"label": i, "value": i} for i in YEARS],
-                       value='2017',
-                       style={"display": "block", "margin-left": "auto", "margin-right": "auto", "width": "80%"})],
-         className="row"),
-     html.Div([dcc.Graph(id="my-graph", style={"margin-right": "auto", "margin-left": "auto", "width": "80%"})],
-              className="row")
-     ], className="container")
+layout = html.Div([
+      html.Div([
+        html.H1("Trade Similarity Index"),
+
+        dcc.Markdown('''
+          ***
+          ## Digital Revolution
+          Bookstores, printers and publishers of newspapers and magazines
+          have lost a combined 400,000 jobs since the recession began.
+          Internet publishers — including web-search firms — offset
+          only a fraction of the losses, adding 76,000 jobs.
+          Electronic shopping and auctions made up the
+           fastest-growing industry, tripling in employment in 10 years.
+          ''', 
+          className='container',
+          style = {'maxWidth': '650px'}
+        ),
+
+        dcc.Dropdown(id="selected-year", options=[{"label": i, "value": i} for i in YEARS],
+                   value='2017',
+                   style={"display": "block", "margin-left": "auto", "margin-right": "auto", "width": "80%"}),
+
+        dcc.Graph(id="heatmap", style={"margin-right": "auto", "margin-left": "auto", "width": "80%"}),
+
+        dcc.Markdown('''
+          ***
+          ## Digital Revolution
+          Bookstores, printers and publishers of newspapers and magazines
+          have lost a combined 400,000 jobs since the recession began.
+          Internet publishers — including web-search firms — offset
+          only a fraction of the losses, adding 76,000 jobs.
+          Electronic shopping and auctions made up the
+           fastest-growing industry, tripling in employment in 10 years.
+          ''', 
+          className='container',
+          style = {'maxWidth': '650px'}
+        ),
+
+        dcc.Dropdown(id="selected-partner", options=[{"label": i, "value": i} for i in PARTNERS],
+                   value='RU',
+                   style={"display": "block", "margin-left": "auto", "margin-right": "auto", "width": "80%"}),
+
+        dcc.Graph(id="slopechart",
+                style={"margin-right": "auto", "margin-left": "auto", "width": "60%"})],
+                className="row"),
+
+        ], style={'align': "center"})
 
 app.layout = layout
 
 @app.callback(
-    Output("my-graph", "figure"),
-    [Input("selected-type", "value")])
+    Output("heatmap", "figure"),
+    [Input("selected-year", "value")])
+
+@app.callback(
+    Output("slopechart", "figure"),
+    [Input("selected-partner", "value")])
 
 def update_figure(selected):
     x, y, z = prepare_data(export_data, selected)
-    trace = go.Heatmap(x=x, y=y, z=z, colorscale='Electric', colorbar={"title": "KDL"}, showscale=True, zauto=False, zmin=0, zmax=12)
+    trace = go.Heatmap(x=x, y=y, z=z, colorscale='Electric', colorbar={"title": "KDL"}, showscale=True, zauto=False, zmin=0, zmax=1)
     return {"data": [trace],
-            "layout": go.Layout(width=800, height=750, title=f"{selected.title()}", xaxis={"title": "Year"},
-                                yaxis={"title": "Country", "tickmode": "array",
-                                       "tickvals": export_data['declarant_name'].unique(),
-                                       "ticktext": export_data['declarant_name'].unique(),
-                                       "tickfont": {"size": 8}, "tickangle": -20}, )}
+            "layout": go.Layout(width=800, height=750, title=f"{selected.title()}", 
+                                xaxis={"title": "Partner"},
+                                yaxis={"title": "Reporter"} )}
+
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, threaded=True)
