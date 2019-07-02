@@ -63,14 +63,10 @@ for data_source in [export_data, import_data]:
               y = [get_first_or_none(convert_index(data.query('DECLARANT=="{}"'.format(d))['TCI_{}'.format(year)].values)) for year in YEARS],
               text = 'Trade between {} and {}'.format(d, Partner),
               mode = 'lines',
-              line = {
-                  'color': 'lightgrey',
-                  'width': 0.5
-              },
+              line = {'width': 1},
               marker = {
                   'size': 15,
-                  'opacity': 0.5,
-                  'line': {'width': 0.5, 'color': 'lightgrey'}
+                  'line': {'width': 1}
               },
               name = d
           )
