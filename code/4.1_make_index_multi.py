@@ -2,7 +2,7 @@ import glob
 import pandas as pd
 from multiprocessing import Pool
 
-file_list = glob.glob('../temp/index/data/*')
+file_list = glob.glob('../temp/index/data/index_??P_20??.csv')
 
 #print(len(file_list))
 def colnames(df):
@@ -36,7 +36,7 @@ def make_index(file_list):
 	data = pd.concat([pd.read_csv(f).rename(columns=lambda x: x.split('_')[0]).assign(FILE=f[-8:-4]) for f in file_list])
 	#data.columns = ["DESCLARANT","PARTNER","TCI"]
 	data = data.pivot_table(index=['DECLARANT','PARTNER'],columns='FILE')
-	data.to_csv('../temp/index/dirty/INDEX_'+file_list[0][-14:-10]+'.csv')
+	data.to_csv('../temp/index/dirty/INDEX_'+file_list[0][-12:-8]+'.csv')
 	# new content
 	#print("new content")
 	"""

@@ -1,8 +1,8 @@
 {
     "inputs": {
         "trade_data_filtered": {
-            "content_id": "d01b164c3540f2dba2180587ce5332100fb5e80fa6b41f80cb1d6964f701adb850863228803cabf87f83a1afc1f806d60b6d0ca21c1e650bce5ca427b8dc6bff", 
-            "freeze_time": "20190329T142514366132+0100", 
+            "content_id": "e1d0986b4f710972f9798ec0d9f2a1ef20d6347e6d9299de708000e3ae1678132346874e1470b46872b67c9d8c2ab3ebb01b33e859e05f13689919b523a94ed9", 
+            "freeze_time": "20190619T175304828170+0200", 
             "kind": "d94bc369cc12a4b32fcec59356d20002-7054b429-55bf-454b-af1c-e59c545d8c90"
         }
     }, 

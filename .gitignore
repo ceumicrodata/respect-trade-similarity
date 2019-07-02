@@ -12,7 +12,8 @@ __pycache__/
 *.so
 
 # data files
-*.csv
+#*.csv
+output/data_for_analysis/
 
 # Distribution / packaging
 .Python
