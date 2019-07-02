@@ -13,7 +13,7 @@ PARTNERS = 'RU CN US'.split() + CANDIDATE_COUNTRIES + NEIGHBORHOOD_COUNTRIES
 
 country_codes = pd.read_csv("input/iso-3166/countries.csv")
 export_data = pd.read_csv('output/TC_INDEX_EXP_.csv',index_col=0)
-import_data = pd.read_csv('output/TC_INDEX_EXP_.csv',index_col=0)
+import_data = pd.read_csv('output/TC_INDEX_IMP_.csv',index_col=0)
 
 i = 0
 
