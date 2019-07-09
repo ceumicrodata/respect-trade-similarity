@@ -4,8 +4,6 @@ import glob
 
 data_list = glob.glob('../temp/exp_imp/??P_20??.csv')
 
-# print(data_list)
-# print(data_list[0][-14:])
 def almost_index(filename):
 	fn = filename.split('/')[-1]
 
