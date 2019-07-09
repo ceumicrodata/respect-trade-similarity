@@ -1,0 +1,29 @@
+bibliographicCitation: Koren, Miklós and Gábor Berei. 2019. "The RESPECT Trade Similarity Index." 
+creator: 
+    - Koren, Miklós
+    - Berei, Gábor
+date: 2019-06-30
+title: The RESPECT Trade Similarity Index 
+description: >
+    We use detailed product-level trade data from Eurostat to construct a Trade Similarity Index for each Member State of the European Union and each third country. The Trade Similarity Index takes values between 0 and 1. A higher value indicates that the trade pattern of the Member State is more similar to the average of the European Union. A value of 0 means that there is no product overlap between the exports (or imports) of the Member State and the rest of the EU. A value of 1 means that the Member State exports (or imports) every product in the same proportion as the rest of the EU.
+identifier: https://doi.org/10.5281/zenodo.3275138
+license: https://creativecommons.org/licenses/by/4.0/
+output_hasPart:
+    -   identifier: output/trade-similarity-index.csv
+        type: Dataset
+run_requires:
+    -   title: Python 3.7
+        type: Software
+        identifier: https://www.python.org/downloads/release/python-374/
+    -   title: pandas 0.24
+        type: Software
+        identifier: https://pypi.org/project/pandas/
+    -   title: "COMEXT: International Trade in Goods"
+        type: Dataset
+        date: 2019
+        identifier: http://epp.eurostat.ec.europa.eu/newxtweb/mainxtnet.do
+run_start:
+    -   identifier: code/run_all.sh
+        type: Software
+        extent: 10 minutes
+ 
