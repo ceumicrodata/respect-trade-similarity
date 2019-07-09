@@ -19,4 +19,4 @@ for db in file_list:
 	# merge the empty dataframe with the data
 	merged = pd.merge(new_df,data, how="left",on=["DECLARANT","PARTNER"]) #.drop("Unnamed: 0",axis=1)
 
-	merged.to_csv("../output/TC_"+db[-14:])
+	merged.to_csv("../temp/TC_"+db[-14:])
